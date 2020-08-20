@@ -1,0 +1,37 @@
+@import '../styles/bootstrap_custom.sass'
+@import '~bootstrap/scss/bootstrap.scss'
+@import 'fonts'
+
+*
+  font-family: 'M PLUS Rounded 1c', sans-serif
+html, body, main
+  height: 100%
+#__next
+  height: 100%
+
+.top-hero
+  @extend .jumbotron
+  @extend .jumbotron-fluid
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: $primary
+  h1
+    color: $white
+    margin: 0
+    font-size: 4.8rem
+    font-weight: 100
+    letter-spacing: .6rem
+    span
+      color: transparent
+      animation: fadein 2s ease-in-out both
+      @for $i from 1 to 15
+        &:nth-child(#{$i})
+          animation-delay: #{$i / 32}s
+      @keyframes fadein
+        0%
+          text-shadow: 0 0 12rem $white
+        100%
+          text-shadow: 0 0 0 $white
+          opacity: 1
