@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -9,6 +10,10 @@ library.add(faCircle, faTwitter, faGithub, faYoutube, faPaperPlane)
 
 const Index = () => (
   <Layout>
+    <Head>
+      <title>comorebi notes | yorozu no mono wo tsukurikeri.</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </Head>
     <section className="top-hero">
       <div className="top-hero-title">
         <span className="top-hero-title-before">

@@ -6,6 +6,9 @@
   font-family: Raleway, sans-serif
 html, body, main
   height: 100%
+main
+  position: relative
+  overflow: hidden
 #__next
   height: 100%
 
@@ -27,11 +30,11 @@ $timing-fadein-links: $timing-move-up-title + .5s
   margin-bottom: 0
   &-bg
     position: absolute
-    z-index: 1
     top: 0
-    bottom: 0
     left: 0
-    right: 0
+    z-index: 1
+    width: 100%
+    height: 100%
     animation: frame-in-bg .8s $stylish-ease both
     animation-delay: $timing-frame-in-bg
     @keyframes frame-in-bg
@@ -49,6 +52,11 @@ $timing-fadein-links: $timing-move-up-title + .5s
       background-color: $primary
       transform: translateY(-100vh) rotate(10deg)
       animation: skew-bg 4s ease infinite, radius-bg 1.6s ease-in-out infinite
+      +media-breakpoint-down(sm)
+        top: 3.4vw
+        bottom: 3.4vw
+        left: 3.4vw
+        right: 3.4vw
     &:after
       content: ""
       position: absolute
@@ -60,6 +68,19 @@ $timing-fadein-links: $timing-move-up-title + .5s
       background-color: $primary
       animation: skew-bg 1.6s ease infinite, radius-bg 1.6s ease-in-out infinite
       animation-delay: .2s
+      +media-breakpoint-down(sm)
+        top: 2vw
+        bottom: 2vw
+        left: 2vw
+        right: 2vw
+    $bg-transform-skew: .2deg
+    @keyframes skew-bg
+      0%
+        transform: skew($bg-transform-skew, $bg-transform-skew) rotate(.2deg)
+      50%
+        transform: skew(-$bg-transform-skew, -$bg-transform-skew) rotate(-.2deg)
+      100%
+        transform: skew($bg-transform-skew, $bg-transform-skew) rotate(.2deg)
     $bg-border-radius: 4rem
     $bg-border-radius-ratio: 1.4
     @keyframes radius-bg
@@ -69,14 +90,15 @@ $timing-fadein-links: $timing-move-up-title + .5s
         border-radius: #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} / #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius}
       100%
         border-radius: #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} / #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio}
-    $bg-transform-skew: .2deg
-    @keyframes skew-bg
-      0%
-        transform: skew($bg-transform-skew, $bg-transform-skew) rotate(.2deg)
-      50%
-        transform: skew(-$bg-transform-skew, -$bg-transform-skew) rotate(-.2deg)
-      100%
-        transform: skew($bg-transform-skew, $bg-transform-skew) rotate(.2deg)
+    +media-breakpoint-down(sm)
+      $bg-border-radius-sm: 2.4rem
+      @keyframes radius-bg
+        0%
+          border-radius: #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} / #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio}
+        50%
+          border-radius: #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio} / #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm}
+        100%
+          border-radius: #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} / #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio} #{$bg-border-radius-sm} #{$bg-border-radius-sm * $bg-border-radius-ratio}
   &-title
     width: 100%
     height: 100%
@@ -84,13 +106,20 @@ $timing-fadein-links: $timing-move-up-title + .5s
     display: flex
     justify-content: center
     align-items: center
-    animation: move-up-title 1.2s $stylish-ease both
     animation-delay: $timing-move-up-title
+    animation: move-up-title 1.2s $stylish-ease both
     @keyframes move-up-title
       from
         top: 0
       to
         top: -6rem
+    +media-breakpoint-down(sm)
+      animation: move-up-title-sm 1.2s $stylish-ease both
+      @keyframes move-up-title-sm
+        from
+          top: 0
+        to
+          top: -18vw
     &-before, &-after
       margin: 0
       font-size: 4rem
@@ -98,6 +127,10 @@ $timing-fadein-links: $timing-move-up-title + .5s
       line-height: 1.2
       letter-spacing: .6rem
       top: calc(50% - 2.4rem)
+      +media-breakpoint-down(sm)
+        font-size: 8vw
+        letter-spacing: .18em
+        top: calc(50% - 5vw)
     &-before
       position: absolute
       span
@@ -134,6 +167,10 @@ $timing-fadein-links: $timing-move-up-title + .5s
       font-size: 1.6rem
       letter-spacing: .2rem
       opacity: 0
+      +media-breakpoint-down(sm)
+        font-size: 3.6vw
+        letter-spacing: .12em
+        top: calc(50% + 6.4vw)
       animation: flash-title-caption .6s ease both
       animation-delay: $timing-flash-title-caption
       @keyframes flash-title-caption
@@ -195,17 +232,43 @@ $timing-fadein-links: $timing-move-up-title + .5s
           100%
             opacity: 0
             border: none
+        +media-breakpoint-down(sm)
+          $msk-width-sm: calc(100% - 4rem)
+          height: 4vw
+          width: $msk-width-sm
+          top: calc(50% + 7.2vw)
+          left: calc(50% - #{$msk-width-sm / 2})
+          animation: mask-title-caption-sm 1s linear both
+          animation-delay: $timing-mask-title-caption
+          @keyframes mask-title-caption-sm
+            0%
+              opacity: 0
+            1%
+              opacity: 1
+            99%
+              width: 0
+              left: calc(50% + #{$msk-width-sm / 2})
+              opacity: 1
+              border-left: 1px solid $white
+            100%
+              opacity: 0
+              border: none
   &-links
     position: absolute
     top: calc(50% + 9rem)
     z-index: 10
+    margin-bottom: 0
+    +media-breakpoint-down(sm)
+      top: calc(50% + 22vw)
+    +media-breakpoint-down(xs)
+      font-size: 3vw
     > li
       position: relative
       opacity: 0
-      animation: fadein-link 2s $stylish-ease both
       @for $i from 1 to 5
         &:nth-child(#{$i})
           animation-delay: #{$timing-fadein-links + $i / 8}
+      animation: fadein-link 2s $stylish-ease both
       @keyframes fadein-link
         from
           top: 3rem
@@ -213,6 +276,15 @@ $timing-fadein-links: $timing-move-up-title + .5s
         to
           top: 0
           opacity: 1
+      +media-breakpoint-down(sm)
+        animation: fadein-link-sm 2s $stylish-ease both
+        @keyframes fadein-link-sm
+          from
+            top: 6vw
+            opacity: 0
+          to
+            top: 0
+            opacity: 1
     a
       transition: opacity .2s ease
       .fa-stack
