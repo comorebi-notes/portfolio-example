@@ -213,10 +213,33 @@ $timing-fadein-links: $timing-move-up-title + .5s
         to
           top: 0
           opacity: 1
+    a
+      transition: opacity .2s ease
       .fa-stack
         > *:last-child
           color: $primary
-    a
-      transition: opacity .2s ease
+          z-index: 10
+          transition: color .2s ease
+        &:after
+          content: ""
+          display: block
+          position: absolute
+          top: 50%
+          left: 50%
+          z-index: 1
+          height: 0
+          width: 0
+          border-radius: 100px
+          background-color: transparent
+          transition: all .2s ease
+        position: relative
       &:hover, &:active
-        opacity: .6
+        .fa-stack
+          > *:last-child
+            color: white
+          &:after
+            top: calc(50% - 1em)
+            left: calc(50% - 1em)
+            height: 2em
+            width: 2em
+            background-color: $pink
