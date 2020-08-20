@@ -9,29 +9,187 @@ html, body, main
 #__next
   height: 100%
 
+$stylish-ease: cubic-bezier(.17, .935, .305, 1)
+
+$timing-start: 0s
+$timing-frame-in-bg: $timing-start + 1.9s
+$timing-fadein-title-after: $timing-frame-in-bg + .2s
+$timing-mask-title-caption: $timing-fadein-title-after + .7s
+$timing-flash-title-caption: $timing-mask-title-caption + .3s
+$timing-move-up-title: $timing-flash-title-caption + .9s
+
 .top-hero
   @extend .jumbotron
   @extend .jumbotron-fluid
   height: 100%
-  display: flex
-  justify-content: center
-  align-items: center
-  background-color: $primary
-  h1
-    color: $white
-    margin: 0
-    font-size: 4.8rem
-    font-weight: 100
-    letter-spacing: .6rem
-    span
-      color: transparent
-      animation: fadein 2s ease-in-out both
-      @for $i from 1 to 15
-        &:nth-child(#{$i})
-          animation-delay: #{$i / 32}s
-      @keyframes fadein
-        0%
-          text-shadow: 0 0 12rem $white
-        100%
-          text-shadow: 0 0 0 $white
+  background-color: $white
+  &-bg
+    position: absolute
+    z-index: 1
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    animation: frame-in-bg .8s $stylish-ease both
+    animation-delay: $timing-frame-in-bg
+    @keyframes frame-in-bg
+      from
+        transform: translateX(10vw) translateY(-150vh) rotate(30deg)
+      to
+        transform: translateX(0) translateY(0) rotate(0)
+    &:before
+      content: ""
+      position: absolute
+      top: 1rem
+      bottom: 1rem
+      left: 1rem
+      right: 1rem
+      background-color: $primary
+      transform: translateY(-100vh) rotate(10deg)
+      animation: skew-bg 4s ease infinite, radius-bg 1.6s ease-in-out infinite
+    &:after
+      content: ""
+      position: absolute
+      top: .8rem
+      bottom: .8rem
+      left: .8rem
+      right: .8rem
+      opacity: .4
+      background-color: $primary
+      animation: skew-bg 1.6s ease infinite, radius-bg 1.6s ease-in-out infinite
+      animation-delay: .2s
+    $bg-border-radius: 4rem
+    $bg-border-radius-ratio: 1.4
+    @keyframes radius-bg
+      0%
+        border-radius: #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} / #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio}
+      50%
+        border-radius: #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} / #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius}
+      100%
+        border-radius: #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} / #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio} #{$bg-border-radius} #{$bg-border-radius * $bg-border-radius-ratio}
+    $bg-transform-skew: .2deg
+    @keyframes skew-bg
+      0%
+        transform: skew($bg-transform-skew, $bg-transform-skew) rotate(.2deg)
+      50%
+        transform: skew(-$bg-transform-skew, -$bg-transform-skew) rotate(-.2deg)
+      100%
+        transform: skew($bg-transform-skew, $bg-transform-skew) rotate(.2deg)
+  &-title
+    width: 100%
+    height: 100%
+    position: relative
+    display: flex
+    justify-content: center
+    align-items: center
+    animation: move-up-title 1.2s $stylish-ease both
+    animation-delay: $timing-move-up-title
+    @keyframes move-up-title
+      from
+        top: 0
+      to
+        top: -6rem
+    &-before, &-after
+      margin: 0
+      font-size: 4rem
+      font-weight: 300
+      line-height: 1.2
+      letter-spacing: .6rem
+      top: calc(50% - 2.4rem)
+    &-before
+      position: absolute
+      span
+        color: transparent
+        animation: fadein-title 1.2s $stylish-ease both
+        @for $i from 1 to 15
+          &:nth-child(#{$i})
+            animation-delay: #{$i / 32}s
+        @keyframes fadein-title
+          from
+            text-shadow: 0 -12rem 12rem $primary
+          to
+            text-shadow: 0 0 0 $primary
+            opacity: 1
+    &-after
+      color: $white
+      font-weight: 300
+      opacity: 0
+      position: absolute
+      z-index: 10
+      animation: fadein-title-after .1s linear both
+      animation-delay: $timing-fadein-title-after
+      @keyframes fadein-title-after
+        from
+          opacity: 0
+        to
           opacity: 1
+    &-caption
+      position: absolute
+      z-index: 10
+      top: calc(50% + 3.2rem)
+      color: $white
+      font-weight: 300
+      font-size: 1.6rem
+      letter-spacing: .2rem
+      opacity: 0
+      animation: flash-title-caption .6s ease both
+      animation-delay: $timing-flash-title-caption
+      @keyframes flash-title-caption
+        0%
+          opacity: 0
+        20%
+          opacity: 0
+        21%
+          opacity: 1
+        30%
+          opacity: 1
+        31%
+          opacity: 0
+        40%
+          opacity: 0
+        41%
+          opacity: 1
+        50%
+          opacity: 1
+        51%
+          opacity: 0
+        60%
+          opacity: 0
+        61%
+          opacity: 1
+        70%
+          opacity: 1
+        71%
+          opacity: 0
+        80%
+          opacity: 0
+        81%
+          opacity: 1
+        100%
+          opacity: 1
+      &-mask
+        $msk-width: 520px
+        position: absolute
+        z-index: 11
+        top: calc(50% + 3.2rem)
+        left: calc(50% - #{$msk-width / 2})
+        height: 2.4rem
+        width: $msk-width
+        background-color: $primary
+        border-left: 1px solid $white
+        opacity: 0
+        animation: mask-title-caption 1s linear both
+        animation-delay: $timing-mask-title-caption
+        @keyframes mask-title-caption
+          0%
+            opacity: 0
+          1%
+            opacity: 1
+          99%
+            width: 0
+            left: calc(50% + #{$msk-width / 2})
+            opacity: 1
+            border-left: 1px solid $white
+          100%
+            opacity: 0
+            border: none
