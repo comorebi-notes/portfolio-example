@@ -3,7 +3,7 @@
 @import 'fonts'
 
 *
-  font-family: 'M PLUS Rounded 1c', sans-serif
+  font-family: Raleway, sans-serif
 html, body, main
   height: 100%
 #__next
@@ -12,17 +12,19 @@ html, body, main
 $stylish-ease: cubic-bezier(.17, .935, .305, 1)
 
 $timing-start: 0s
-$timing-frame-in-bg: $timing-start + 1.9s
+$timing-frame-in-bg: $timing-start + 1.6s
 $timing-fadein-title-after: $timing-frame-in-bg + .2s
 $timing-mask-title-caption: $timing-fadein-title-after + .7s
-$timing-flash-title-caption: $timing-mask-title-caption + .3s
-$timing-move-up-title: $timing-flash-title-caption + .9s
+$timing-flash-title-caption: $timing-mask-title-caption + .2s
+$timing-move-up-title: $timing-flash-title-caption + .8s
+$timing-fadein-links: $timing-move-up-title + .5s
 
 .top-hero
   @extend .jumbotron
   @extend .jumbotron-fluid
   height: 100%
   background-color: $white
+  margin-bottom: 0
   &-bg
     position: absolute
     z-index: 1
@@ -193,3 +195,28 @@ $timing-move-up-title: $timing-flash-title-caption + .9s
           100%
             opacity: 0
             border: none
+  &-links
+    position: absolute
+    top: calc(50% + 9rem)
+    z-index: 10
+    > li
+      position: relative
+      opacity: 0
+      animation: fadein-link 2s $stylish-ease both
+      @for $i from 1 to 5
+        &:nth-child(#{$i})
+          animation-delay: #{$timing-fadein-links + $i / 8}
+      @keyframes fadein-link
+        from
+          top: 3rem
+          opacity: 0
+        to
+          top: 0
+          opacity: 1
+      .fa-stack
+        > *:last-child
+          color: $primary
+    a
+      transition: opacity .2s ease
+      &:hover, &:active
+        opacity: .6
